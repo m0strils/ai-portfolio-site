@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jeff Lynch — Agentic AI, built for production</title>
+<meta name="description" content="A solutions architect building governed, evaluated, observable agentic AI for complex, regulated enterprises in any industry — with honest enterprise-readiness scorecards for every project.">
+<style>
+  /* ===== Tokens — monochrome ink-on-paper; one color: built-status green ===== */
+  :root{
+    --paper:#F7F8F6;        /* cool-neutral ground, faint green bias (chosen, not cream) */
+    --panel:#FFFFFF;
+    --ink:#171A18;          /* headings / primary text */
+    --graphite:#494E4B;     /* body text */
+    --muted:#6A6F6B;        /* labels, captions — AA (>= 4.6:1 on paper) */
+    --line:#E4E7E2;         /* hairlines */
+    --line-2:#D3D7D1;
+    --built:#2E7A4E;        /* the only hue — muted institutional green */
+    --partial:#9AA09B;      /* neutral mid */
+    --road:#C7CCC6;         /* neutral faint (roadmap outline) */
+    --focus:#2E7A4E;
+
+    --serif: 'Iowan Old Style','Palatino Linotype',Palatino,Georgia,Cambria,'Times New Roman',serif;
+    --sans: system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --mono: ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,'Liberation Mono',monospace;
+    --measure:66ch;
+    --pad:clamp(1.15rem,4.5vw,2.5rem);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#14171A; --panel:#191D20; --ink:#ECEFEC; --graphite:#B7BEB9;
+      --muted:#828A84; --line:#262B29; --line-2:#333935;
+      --built:#48A776; --partial:#6C736E; --road:#3B423D; --focus:#48A776;
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#F7F8F6; --panel:#FFFFFF; --ink:#171A18; --graphite:#494E4B; --muted:#6A6F6B;
+    --line:#E4E7E2; --line-2:#D3D7D1; --built:#2E7A4E; --partial:#9AA09B; --road:#C7CCC6; --focus:#2E7A4E;
+  }
+  :root[data-theme="dark"]{
+    --paper:#14171A; --panel:#191D20; --ink:#ECEFEC; --graphite:#B7BEB9; --muted:#828A84;
+    --line:#262B29; --line-2:#333935; --built:#48A776; --partial:#6C736E; --road:#3B423D; --focus:#48A776;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+  body{
+    margin:0; background:var(--paper); color:var(--graphite);
+    font-family:var(--sans); font-size:16.5px; line-height:1.65;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  .wrap{max-width:960px; margin-inline:auto; padding-inline:var(--pad)}
+  a{color:var(--ink); text-decoration:none; border-bottom:1px solid var(--line-2)}
+  a:hover{border-color:var(--ink)}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--focus); outline-offset:3px; border-radius:1px}
+  ::selection{background:var(--built); color:#fff}
+  h1,h2,h3{color:var(--ink); margin:0; text-wrap:balance}
+
+  /* eyebrow / structural label — mono, encodes a real section tag */
+  .tag{font-family:var(--mono); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted)}
+
+  /* ---- nav ---- */
+  header.nav{position:sticky; top:0; z-index:20; background:color-mix(in srgb,var(--paper) 90%,transparent);
+    backdrop-filter:blur(6px); border-bottom:1px solid var(--line)}
+  header.nav .wrap{display:flex; align-items:center; justify-content:space-between; gap:1rem; padding-block:.85rem}
+  .brand{font-family:var(--mono); font-size:.9rem; letter-spacing:.02em; color:var(--ink); border:0; font-weight:600}
+  nav ul{list-style:none; display:flex; gap:1.4rem; margin:0; padding:0}
+  nav a{font-size:.9rem; color:var(--muted); border:0}
+  nav a:hover{color:var(--ink)}
+  .toggle{font-family:var(--mono); font-size:.75rem; background:none; border:1px solid var(--line-2);
+    color:var(--muted); padding:.34rem .6rem; border-radius:2px; cursor:pointer; letter-spacing:.04em}
+  .toggle:hover{color:var(--ink); border-color:var(--ink)}
+  @media (max-width:600px){ nav ul{display:none} }
+
+  section{padding-block:clamp(2.8rem,7vw,4.8rem); border-bottom:1px solid var(--line)}
+
+  /* ---- hero ---- */
+  .hero .tag{display:block; margin-bottom:1.4rem}
+  .hero h1{font-family:var(--serif); font-weight:600; font-size:clamp(2rem,5.2vw,3.25rem);
+    line-height:1.12; letter-spacing:-.012em; max-width:20ch}
+  .hero h1 em{font-style:normal; color:var(--built)}
+  .hero .sub{font-size:clamp(1.02rem,2.2vw,1.16rem); color:var(--graphite); max-width:var(--measure); margin-top:1.5rem}
+  .meta{display:flex; flex-wrap:wrap; gap:.75rem; margin-top:2rem; font-family:var(--mono); font-size:.78rem}
+  .meta span{border:1px solid var(--line-2); border-radius:2px; padding:.35rem .65rem; color:var(--muted)}
+  .meta b{color:var(--ink); font-weight:600}
+
+  /* ---- section header ---- */
+  .sechead{display:flex; align-items:baseline; gap:1rem; margin-bottom:2rem}
+  .sechead h2{font-family:var(--serif); font-weight:600; font-size:clamp(1.3rem,3vw,1.7rem); letter-spacing:-.01em}
+  .sechead .fill{flex:1; height:0; border-top:1px solid var(--line); translate:0 -.35em}
+  .intro{color:var(--graphite); max-width:var(--measure); margin:0 0 2rem}
+
+  /* ---- framework: numbered checklist (order is meaningful) ---- */
+  .dims{display:grid; grid-template-columns:repeat(auto-fill,minmax(255px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line)}
+  .dim{background:var(--panel); padding:1.15rem 1.2rem}
+  .dim .k{font-family:var(--mono); font-size:.72rem; color:var(--muted)}
+  .dim h3{font-size:1rem; margin:.15rem 0 .4rem; font-weight:600}
+  .dim p{font-size:.86rem; color:var(--muted); margin:0; line-height:1.5}
+
+  /* ---- project records ---- */
+  .rec{border:1px solid var(--line); border-radius:3px; background:var(--panel); padding:clamp(1.2rem,3vw,1.9rem); margin-top:1.5rem}
+  .rec .top{display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:.5rem 1rem}
+  .rec h3{font-family:var(--serif); font-size:1.32rem; font-weight:600; letter-spacing:-.01em}
+  .rec .path{font-family:var(--mono); font-size:.76rem; color:var(--muted); margin-top:.25rem}
+  .rec .role{font-family:var(--mono); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+  .rec .body{display:grid; grid-template-columns:1.55fr 1fr; gap:1.5rem 2.4rem; margin-top:1.3rem}
+  @media (max-width:700px){ .rec .body{grid-template-columns:1fr} }
+  .rec p{font-size:.95rem; margin:.1rem 0 1rem; max-width:52ch}
+  .rec p b{color:var(--ink); font-weight:600}
+  .scale{border-left:2px solid var(--built); padding-left:.85rem; color:var(--muted); font-size:.85rem; margin-top:.2rem}
+  .scale .lbl{font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--built); display:block; margin-bottom:.2rem}
+
+  /* ---- scorecard: green = built; partial/roadmap stay neutral ---- */
+  .card{font-family:var(--mono); font-size:.8rem; font-variant-numeric:tabular-nums; align-self:start}
+  .card .h{font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:.7rem}
+  .row{display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:.7rem; padding:.32rem 0; border-bottom:1px solid var(--line)}
+  .row:last-child{border-bottom:0}
+  .row .d{color:var(--graphite)}
+  .row .s{font-size:.7rem; letter-spacing:.05em; text-transform:uppercase; color:var(--muted)}
+  .dot{width:.7rem; height:.7rem; border-radius:50%; display:inline-block; border:1px solid transparent}
+  .on .dot{background:var(--built)}
+  .on .d{color:var(--ink)} .on .s{color:var(--built)}
+  .part .dot{background:var(--partial)}
+  .road .dot{background:transparent; border-color:var(--road)}
+  .legend{display:flex; gap:1.3rem; flex-wrap:wrap; margin-top:1.5rem; font-family:var(--mono); font-size:.74rem; color:var(--muted)}
+  .legend span{display:flex; align-items:center; gap:.5rem}
+
+  /* ---- honesty note ---- */
+  .note{border:1px solid var(--line-2); border-left:3px solid var(--built); border-radius:3px;
+    background:var(--panel); padding:1.3rem 1.4rem; max-width:var(--measure)}
+  .note p{margin:.1rem 0 .8rem; font-size:.96rem} .note p:last-child{margin-bottom:0}
+  .note b{color:var(--ink); font-weight:600}
+
+  /* ---- footer ---- */
+  footer{padding-block:2.6rem 3.4rem; border:0}
+  .cta{display:flex; flex-wrap:wrap; gap:.7rem; margin:1.2rem 0}
+  .cta a{font-family:var(--mono); font-size:.82rem; border:1px solid var(--line-2); border-radius:2px;
+    padding:.6rem 1rem; color:var(--ink)}
+  .cta a:hover{border-color:var(--built); color:var(--built)}
+  .todo{font-family:var(--mono); font-size:.76rem; color:var(--muted); max-width:var(--measure)}
+  .foot-meta{display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+    border-top:1px solid var(--line); margin-top:1.6rem; padding-top:1.2rem; font-size:.82rem; color:var(--muted)}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">Jeff&nbsp;Lynch</a>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="#framework">Framework</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="toggle" id="themeToggle" type="button" aria-label="Toggle light or dark theme">theme</button>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <span class="tag">AI Solutions Architect · Director</span>
+      <h1>Agentic AI, built the way a regulated enterprise <em>actually ships it.</em></h1>
+      <p class="sub">I'm a solutions architect who takes agentic AI to production in complex, regulated
+        enterprises — with the guardrails, audit trails, evaluation, and honest scorecards that separate a
+        demo from a system you can run. Two decades on mission-critical, event-driven systems taught me the
+        discipline; the industry changes, the rigor doesn't.</p>
+      <div class="meta">
+        <span><b>20&nbsp;yrs</b>&nbsp;mission-critical architecture</span>
+        <span><b>Industry-agnostic</b>&nbsp;— deep in rail / EDI / X12</span>
+        <span><b>Applied GenAI</b>&nbsp;— Talofa</span>
+        <span><b>Vanderbilt</b>&nbsp;GenAI · 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FRAMEWORK -->
+  <section id="framework">
+    <div class="wrap">
+      <div class="sechead"><span class="tag">01</span><h2>Enterprise-readiness</h2><span class="fill"></span></div>
+      <p class="intro">Most AI portfolios stop at "it works." Mine is built against an eight-dimension
+        readiness framework — the gap between a prototype and production in any regulated enterprise. The
+        framework is industry-agnostic; every project below is scored against it, honestly.</p>
+      <div class="dims">
+        <div class="dim"><span class="k">01</span><h3>Security</h3><p>OWASP LLM Top-10: input/output guardrails, injection defense, instruction/data separation.</p></div>
+        <div class="dim"><span class="k">02</span><h3>Governance</h3><p>Audit logging, prompt/model versioning, PII handling — every action traceable.</p></div>
+        <div class="dim"><span class="k">03</span><h3>Evaluation</h3><p>Eval as a release gate: golden sets, faithfulness, block regressions before deploy.</p></div>
+        <div class="dim"><span class="k">04</span><h3>Observability</h3><p>Tracing every LLM/tool call; token, cost, latency and drift kept in view.</p></div>
+        <div class="dim"><span class="k">05</span><h3>Reliability</h3><p>Retries, timeouts, circuit breakers, graceful refusal over a confident wrong answer.</p></div>
+        <div class="dim"><span class="k">06</span><h3>Cost</h3><p>Model routing, caching, per-request budgets — spend you can predict and defend.</p></div>
+        <div class="dim"><span class="k">07</span><h3>Deployment</h3><p>IaC, CI/CD, secrets hygiene, in-VPC posture for data residency.</p></div>
+        <div class="dim"><span class="k">08</span><h3>Context &amp; Memory</h3><p>Retrieval routing, agentic memory, progressive disclosure — the 2026 skill.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="wrap">
+      <div class="sechead"><span class="tag">02</span><h2>Selected work</h2><span class="fill"></span></div>
+      <p class="intro">Three connected builds on one spine — the readiness framework above. Each shows the
+        problem, the enterprise controls, an honest scorecard, and what it becomes at scale.</p>
+
+      <article class="rec">
+        <div class="top">
+          <div><h3>Interchange</h3><div class="path">ai-portfolio / interchange-ai</div></div>
+          <div class="role">Governed knowledge runtime</div>
+        </div>
+        <div class="body">
+          <div>
+            <p><b>Problem.</b> Answer questions over X12/EDI &amp; rail rules — deliberately one of the most
+              arcane regulated domains there is: if a governed knowledge runtime holds here, it holds in your
+              industry. "Naive RAG" is dead; this is a knowledge runtime.</p>
+            <p><b>Controls.</b> Input guardrail (injection heuristics), instruction/data separation, an output
+              grounding check that flags anything uncited, and a per-request audit log with token cost and latency.</p>
+            <p class="scale"><span class="lbl">At scale</span>LangGraph agent + MCP tool, hybrid retrieval, RAGAS gate, Phoenix tracing, Bedrock in-VPC.</p>
+          </div>
+          <div class="card">
+            <div class="h">Readiness</div>
+            <div class="row on"><span class="dot"></span><span class="d">Security</span><span class="s">built</span></div>
+            <div class="row on"><span class="dot"></span><span class="d">Governance</span><span class="s">built</span></div>
+            <div class="row part"><span class="dot"></span><span class="d">Observability</span><span class="s">partial</span></div>
+            <div class="row part"><span class="dot"></span><span class="d">Reliability</span><span class="s">partial</span></div>
+            <div class="row part"><span class="dot"></span><span class="d">Cost</span><span class="s">partial</span></div>
+            <div class="row road"><span class="dot"></span><span class="d">Evaluation</span><span class="s">roadmap</span></div>
+            <div class="row road"><span class="dot"></span><span class="d">Context/Memory</span><span class="s">roadmap</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="rec">
+        <div class="top">
+          <div><h3>ComplianceRAG</h3><div class="path">ai-portfolio / compliance-rag</div></div>
+          <div class="role">Grounded governance Q&amp;A</div>
+        </div>
+        <div class="body">
+          <div>
+            <p><b>Problem.</b> The AI that answers "is my AI compliant?" — grounded in the actual public texts:
+              EU AI Act, NIST AI RMF, OWASP LLM Top-10. 100% public data, cited to source.</p>
+            <p><b>Controls.</b> Reuses the same guardrail + grounding + audit spine; answers must cite a clause or
+              they're flagged ungrounded. Built as a mini-course — each capability is a numbered lesson.</p>
+            <p class="scale"><span class="lbl">At scale</span>Citation-to-clause, agentic retrieval, eval harness on a golden compliance set.</p>
+          </div>
+          <div class="card">
+            <div class="h">Readiness</div>
+            <div class="row on"><span class="dot"></span><span class="d">Security</span><span class="s">built</span></div>
+            <div class="row on"><span class="dot"></span><span class="d">Governance</span><span class="s">built</span></div>
+            <div class="row part"><span class="dot"></span><span class="d">Observability</span><span class="s">partial</span></div>
+            <div class="row part"><span class="dot"></span><span class="d">Reliability</span><span class="s">partial</span></div>
+            <div class="row road"><span class="dot"></span><span class="d">Evaluation</span><span class="s">roadmap</span></div>
+            <div class="row road"><span class="dot"></span><span class="d">Deployment</span><span class="s">roadmap</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="rec">
+        <div class="top">
+          <div><h3>Prompt-Injection Playground</h3><div class="path">ai-portfolio / injection-playground</div></div>
+          <div class="role">Defensive security lab</div>
+        </div>
+        <div class="body">
+          <div>
+            <p><b>Problem.</b> Prompt injection is genuinely unsolved. A hands-on lab: a deliberately-vulnerable
+              RAG app, four documented attacks, and the layered defenses that stop each — fully offline, no keys.</p>
+            <p><b>Controls.</b> Direct + indirect (RAG-poisoning) injection, secret exfiltration, insecure-output
+              handling — each paired with the defense that stops it. A runner prints a PASS/FAIL table: lands undefended, blocked defended.</p>
+            <p class="scale"><span class="lbl">At scale</span>Classifier-grade guardrails, tool-scoping, human-in-the-loop for irreversible actions.</p>
+          </div>
+          <div class="card">
+            <div class="h">Readiness</div>
+            <div class="row on"><span class="dot"></span><span class="d">Security</span><span class="s">built</span></div>
+            <div class="row part"><span class="dot"></span><span class="d">Governance</span><span class="s">partial</span></div>
+            <div class="row part"><span class="dot"></span><span class="d">Evaluation</span><span class="s">partial</span></div>
+            <div class="row road"><span class="dot"></span><span class="d">Observability</span><span class="s">roadmap</span></div>
+            <div class="row road"><span class="dot"></span><span class="d">Deployment</span><span class="s">roadmap</span></div>
+          </div>
+        </div>
+      </article>
+
+      <div class="legend" aria-label="Scorecard legend">
+        <span><span class="dot" style="background:var(--built)"></span> built</span>
+        <span><span class="dot" style="background:var(--partial)"></span> partial</span>
+        <span><span class="dot" style="background:transparent;border:1px solid var(--road)"></span> roadmap</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap">
+      <div class="sechead"><span class="tag">03</span><h2>Straight talk</h2><span class="fill"></span></div>
+      <div class="note">
+        <p>These are <b>personal, learning-by-building projects</b> — and that's the point. The scorecards tell
+          the truth: what's <b>built</b>, what's <b>partial</b>, what's <b>roadmap</b>. No demo dressed up as a
+          shipped product; no claim I can't defend line-by-line.</p>
+        <p>My lane is <b>applied agentic AI plus architecture and delivery leadership</b> — not foundation-model
+          research. I've shipped applied voice-AI (Talofa, an independent build), hold a 2026 Vanderbilt GenAI
+          credential, and bring the reliability instincts of two decades on systems that weren't allowed to go
+          down. The industry changes; the discipline doesn't — point me at a new domain and I go deep fast.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- CONTACT -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="sechead"><span class="tag">04</span><h2>Get in touch</h2><span class="fill"></span></div>
+    <div class="cta">
+      <a href="https://github.com/PLACEHOLDER">GitHub — the repos ↗</a>
+      <a href="https://www.linkedin.com/in/PLACEHOLDER">LinkedIn ↗</a>
+      <a href="mailto:PLACEHOLDER@example.com">Email ↗</a>
+    </div>
+    <p class="todo">Before launch: real GitHub / LinkedIn / email URLs · live per-project repo links (activate on
+      push) · a 2-minute walkthrough video (terminal running + one interesting failure and the fix — this alone beats most applicants).</p>
+    <div class="foot-meta">
+      <span>Jeff Lynch — agentic AI, built for production.</span>
+      <span>Built against the 8-dimension readiness framework.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Minimal, dependency-free theme toggle. Respects OS preference until the user overrides.
+  (function(){
+    var btn = document.getElementById('themeToggle');
+    if(!btn) return;
+    btn.addEventListener('click', function(){
+      var cur = document.documentElement.getAttribute('data-theme');
+      if(!cur){ cur = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+      document.documentElement.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+    });
+  })();
+</script>
+</body>
+</html>
